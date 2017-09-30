@@ -1,24 +1,26 @@
-require_relative "card"
+require_relative 'card'
 
 class Deck
   def initialize
     @cards = []
-    @suits = [:spades, :diamonds, :clubs, :hearts]
+    @suits = %i[clubs diamonds hearts spades]
     @ranks = Card.ranks
-
-    @ranks.each do |rank|
-      @cards <<
-      Card.new(rank, :spades)
+    @suits.each do |suit|
+      @ranks.each do |rank|
+        @cards << Card.new(rank, suit)
+      end
     end
   end
 
-  end
-
   def cards_left
-    52
+    @cards.length
   end
 
-  def draw
-    Card.new(
+  def draw(player)
+    player << @cards.shift
+  end
+
+  def shuffle
+    @cards = @cards.shuffle
   end
 end

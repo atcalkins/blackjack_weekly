@@ -1,100 +1,51 @@
-require_relative "player"
-require_relative "dealer"
-require_relative "deck"
-require_relative "card"
-
-def initialize
-  @user = user.new
-  @dealer = dealer.new
-  @deck = deck.new
-  # dealer.draw(2)
-  # user.draw(2)
-end
-
-def rules
-
-  # Rules of blackjack implemented here
-  # 21 = blackjack
-  def blackjack_value
-    card.value(21) == blackjack
-
-  end
-  # 17 = Dealer Stay
-
-
-  # 16 or < = Dealer hit
-  # Values == to each other = push and money returned
-  # new game resets the deck and shuffles and draws 2 cards for dealer and hand
-  #player has 100 in money only bets and loses or gains 10
-
-end
-
-
-
-def show_hand(player, hand)
-  puts "#{player}\n" +
-  "#{hand}"
-end
-
-end
-
-
-
-
-require_relative "deck"
-require_relative "card"
-require_relative "user"
-require_relative "dealer"
+require_relative 'player'
+require_relative 'dealer'
+require_relative 'deck'
 
 class Game
-
   def initialize
-    @user = User.new
+    @player = Player.new
     @dealer = Dealer.new
     @deck = Deck.new
   end
 
-  def user
-    @user
+  attr_reader :player
+
+  attr_reader :dealer
+
+  attr_reader :deck
+
+  def shuffle_deck
+    @deck.shuffle
   end
 
-  def dealer
-    @dealer
+  def player_draw
+    @deck.draw(@player.hand)
   end
 
-  def deck
-    @deck
+  def dealer_draw
+    @deck.draw(@dealer.hand)
   end
 
-  def shuffle
-    deck.shuffle
-  end
+  attr_reader :hand_value
 
-  def user_hand_init
-    2.times do
-      card = deck.draw
+  def player_hand(player)
+    @hand_value = 0
+    hand_total = player.hand.length - 1
 
-    end
-  end
-
-  def player_input
-    while true
-      print "You have bet $10.00 Would you like to (h)it or (s)tay?"
-      answer = gets.chomp.downcase
-      if answer[1] == "h"
-        user.hand << deck.draw
-        return true
-      elsif answer[1] == "s"
-        return true
+    for i in 0..hand_total
+      if (player.hand[i].rank == :K) || (player.hand[i].rank == :Q) || (player.hand[i].rank == :J)
+        @hand_value += 10
+      elsif player.hand[i].rank == :A
+        @hand_value += if @hand_value > 10
+          1
+        else
+          11
+        end
       else
-        return false
+        @hand_value += player.hand[i].rank
       end
-      print "Dealer wins"
+      puts "#{player.hand[i].rank} #{player.hand[i].suit.upcase}"
     end
   end
-
-  def user_hand_value
-
-  end
-
 end

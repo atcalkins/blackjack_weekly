@@ -1,19 +1,30 @@
 class Card
+
+  def initialize(rank, suit)
+    @rank = rank
+    @suit = suit
+  end
+
   attr_reader :suit, :rank
 
-  def initialize(suit, rank)
-    @suit = suit
-    @rank = rank
+  def self.ranks
+    [:A, 2, 3, 4, 5, 6, 7, 8, 9, 10, :J, :Q, :K]
   end
 
   def greater_than?(card)
     value > card.value
   end
 
-  def self.ranks
-    [:A, 2, 3, 4, 5, 6, 7, 8, 9, :J, :Q, :K]
+  def value(rank)
+    ranks.index(rank)
+  end
+
+  def ==(card)
+    suit == card.suit &&
+      rank == card.rank
   end
 
   def value
-    Card.ranks.index(self.rank)
+    self.class.ranks.index(rank)
   end
+end

@@ -1,23 +1,10 @@
-require relative "card"
-require relative "game"
-require relative "player"
-require relative "deck"
+class Dealer
+  attr_accessor :hand, :hand_value
 
-def initialize
-  @hand = Hand.new
-  @deck = Deck.new
-  @players = players
-  @game_over = false
+  def initialize
+    @hand = []
+    @hand_value = 0
+  end
+
+  attr_reader :hand
 end
-  #hand reset
-
-
-  def game_in_play
-    puts "Dealer is dealing cards \n"
-    play_round until @game_over
-    puts "game over \n\n"
-  end
-
-  def show_dealer_hand
-    show_hand(self, @hand)
-  end

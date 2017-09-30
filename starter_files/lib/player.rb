@@ -1,30 +1,22 @@
-require relative "card"
-require relative "hand"
-require relative "deck"
-require realative "game"
-
-
 class Player
-  attr_accessor :hand, :hand_value, :ace_count
   def initialize
+    @money = 100
     @hand = []
-    @hand_value = 0
-    @ace_count = ace_count
-    @bank = 100
-
   end
 
-  def hit
-    card = .draw
-    @hand_value == 0 ? @hand_value = card.value.to_i : @hand_value += card.value.to_i
-    @hand << card
+  attr_reader :hand
+
+  attr_reader :money
+
+  def wager
+    @money -= 10
   end
 
-  def bank
-    @bank
+  def push
+    @money += 0
   end
-  # need to -10 every bet here?
+
+  def win
+    @money += 20
+  end
 end
-
-
-#hand reset
